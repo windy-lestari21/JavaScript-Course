@@ -79,12 +79,32 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterBegin', html);
   });
 };
-displayMovements(account1.movements);
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 };
-calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter((int, i, arr) => {
+      // console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -92,15 +112,107 @@ const createUsernames = function (accs) {
       .toLowerCase()
       .split(' ')
       .map(name => name[0])
-      .join(' ');
+      .join('');
   });
 };
-
 createUsernames(accounts);
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+
+  // Display balance
+  calcDisplayBalance(acc);
+
+  // Display summary
+  calcDisplaySummary(acc);
+};
+////////////////////////////////////
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //  Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    console.log('login');
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // Doing transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // update UI
+    updateUI(currentAccount);
+  }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e, preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+  }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const currencies = new Map([
   ['USD', 'United States dollar'],
@@ -111,7 +223,6 @@ const currencies = new Map([
 ///////////////////////////////////////
 //  Looping Arrays: forEach
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /*
 // for (const movement of movements) {
 for (const [i, movement] of movements.entries()) {
@@ -263,7 +374,7 @@ const withdrwals = movements.filter(mov => mov < 0);
 console.log(withdrwals);
 */
 
-console.log(movements);
+// console.log(movements);
 
 // accumulator -> snowball
 // const balance = movements.reduce(function (acc, cur, i, arr) {
@@ -323,6 +434,7 @@ const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(avg1, avg2);
 */
 
+/*
 ///////////////////////////////////////
 // The Magic of Chaining Methods
 const eurToUsd = 1.1;
@@ -338,6 +450,7 @@ const totalDepositsUSD = movements
   // .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositsUSD);
+*/
 
 ///////////////////////////////////////
 // Coding Challenge #3
@@ -351,6 +464,7 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
+/*
 const calcAverageHumanAge = ages =>
   ages
     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
@@ -361,3 +475,176 @@ const calcAverageHumanAge = ages =>
 const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(avg1, avg2);
+*/
+
+// The Find Method ////
+//////////////////////////
+/*
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+*/
+
+/*
+console.log(movements);
+
+// EQUALITY
+console.log(movements.includes(-130));
+
+// SOME: CONDITION
+console.log(movements.some(mov => mov === -130));
+
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// EVERY
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+*/
+
+/*
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+// Flat
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+// FlatMap
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance2);
+*/
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/*
+This time, Julia and Kate are studying the activity levels of different dog breeds.
+
+YOUR TASKS:
+1. Store the the average weight of a "Husky" in a variable "huskyWeight"
+2. Find the name of the only breed that likes both "running" and "fetch" ("dogBothActivities" variable)
+3. Create an array "allActivities" of all the activities of all the dog breeds
+4. Create an array "uniqueActivities" that contains only the unique activities (no activity repetitions). HINT: Use a technique with a special data structure that we studied a few sections ago.
+5. Many dog breeds like to swim. What other activities do these dogs like? Store all the OTHER activities these breeds like to do, in a unique array called "swimmingAdjacent".
+6. Do all the breeds have an average weight of 10kg or more? Log to the console whether "true" or "false".
+7. Are there any breeds that are "active"? "Active" means that the dog has 3 or more activities. Log to the console whether "true" or "false".
+
+BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT: Use the "Math.max" method along with the ... operator.
+
+TEST DATA:
+*/
+
+/*
+const breeds = [
+  {
+    breed: 'German Shepherd',
+    averageWeight: 32,
+    activities: ['fetch', 'swimming'],
+  },
+  {
+    breed: 'Dalmatian',
+    averageWeight: 24,
+    activities: ['running', 'fetch', 'agility'],
+  },
+  {
+    breed: 'Labrador',
+    averageWeight: 28,
+    activities: ['swimming', 'fetch'],
+  },
+  {
+    breed: 'Beagle',
+    averageWeight: 12,
+    activities: ['digging', 'fetch'],
+  },
+  {
+    breed: 'Husky',
+    averageWeight: 26,
+    activities: ['running', 'agility', 'swimming'],
+  },
+  {
+    breed: 'Bulldog',
+    averageWeight: 36,
+    activities: ['sleeping'],
+  },
+  {
+    breed: 'Poodle',
+    averageWeight: 18,
+    activities: ['agility', 'fetch'],
+  },
+];
+
+// 1.
+const huskyWeight = breeds.find(breed => breed.breed === 'Husky').averageWeight;
+console.log(huskyWeight);
+
+// 2.
+const dogBothActivities = breeds.find(
+  breed =>
+    breed.activities.includes('fetch') && breed.activities.includes('running')
+).breed;
+console.log(dogBothActivities);
+
+// 3.
+// const allActivities = breeds.map(breed => breed.activities).flat();
+const allActivities = breeds.flatMap(breed => breed.activities);
+console.log(allActivities);
+
+// 4.
+const uniqueActivities = [...new Set(allActivities)];
+console.log(uniqueActivities);
+
+// 5.
+const swimmingAdjacent = [
+  ...new Set(
+    breeds
+      .filter(breed => breed.activities.includes('swimming'))
+      .flatMap(breed => breed.activities)
+      .filter(activity => activity !== 'swimming')
+  ),
+];
+console.log(swimmingAdjacent);
+
+// 6.
+console.log(breeds.every(breed => breed.averageWeight > 10));
+
+// 7.
+console.log(breeds.some(breed => breed.activities.length >= 3));
+
+// BONUS
+const fetchWeights = breeds
+  .filter(breed => breed.activities.includes('fetch'))
+  .map(breed => breed.averageWeight);
+const heaviestFetchBreed = Math.max(...fetchWeights);
+
+console.log(fetchWeights);
+console.log(heaviestFetchBreed);
+*/
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+// Number
+console.log(movements);
+console.log(movements.sort());
