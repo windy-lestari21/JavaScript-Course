@@ -85,6 +85,11 @@ const displayMovements = function (movements, sort = false) {
     containerMovements.insertAdjacentHTML('afterBegin', html);
   });
 };
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// LECTURES
+
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${acc.balance}€`;
@@ -290,7 +295,6 @@ const currencies = new Map([
      console.log(arr2.reverse());
      console.log(arr2);
      
-     
      const arr = [23, 11, 64];
      console.log(arr[0]);
      console.log(arr.at(0));
@@ -306,7 +310,6 @@ const currencies = new Map([
 
 ///////////////////////////////////////
 // Coding Challenge #1
-
 /* 
     Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
     
@@ -343,7 +346,6 @@ const currencies = new Map([
         };
         checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
         */
-
 /*
        // The map method
        const eurToUsd = 1.1;
@@ -355,8 +357,7 @@ const currencies = new Map([
         const movementsUSD = movements.map(mov => mov * eurToUsd);
         
         console.log(movements);
-        console.log(movementsUSD);
-        
+        console.log(movementsUSD); 
         const movementsUSDfor = [];
         for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
         console.log(movementsUSDfor);
@@ -389,7 +390,6 @@ const currencies = new Map([
           const withdrwals = movements.filter(mov => mov < 0);
           console.log(withdrwals);
           */
-
 // console.log(movements);
 
 // accumulator -> snowball
@@ -635,9 +635,8 @@ const breeds = [
     averageWeight: 32,
     activities: ['fetch', 'swimming'],
     },
-    {
-      breed: 'Dalmatian',
-      averageWeight: 24,
+    {breed: 'Dalmatian',
+averageWeight: 24,
       activities: ['running', 'fetch', 'agility'],
       },
       {
@@ -667,28 +666,28 @@ const breeds = [
                 },
                 ];
                 
-                // 1.
-                const huskyWeight = breeds.find(breed => breed.breed === 'Husky').averageWeight;
-                console.log(huskyWeight);
-                
-                // 2.
-                const dogBothActivities = breeds.find(
-                  breed =>
-                    breed.activities.includes('fetch') && breed.activities.includes('running')
+// 1.
+onst huskyWeight = breeds.find(breed => breed.breed === 'Husky').averageWeight;
+  console.log(huskyWeight);
+  
+  // 2.
+  const dogBothActivities = breeds.find(
+    breed =>
+      breed.activities.includes('fetch') && breed.activities.includes('running')
                   ).breed;
-                  console.log(dogBothActivities);
+    console.log(dogBothActivities);
                   
-                  // 3.
-                  // const allActivities = breeds.map(breed => breed.activities).flat();
-                  const allActivities = breeds.flatMap(breed => breed.activities);
-                  console.log(allActivities);
+    // 3.
+    // const allActivities = breeds.map(brbreed.activities).flat();
+    const allActivities = breeds.flatMap(brbreed.activities);
+    console.log(allActivities);
                   
-                  // 4.
-                  const uniqueActivities = [...new Set(allActivities)];
-                  console.log(uniqueActivities);
+    // 4.
+    const uniqueActivities = [...(allActivities)];
+    console.log(uniqueActivities);
                   
-                  // 5.
-                  const swimmingAdjacent = [
+    // 5.
+    const swimmingAdjacent = [
                     ...new Set(
                       breeds
                       .filter(breed => breed.activities.includes('swimming'))
@@ -704,112 +703,111 @@ const breeds = [
                       // 7.
                       console.log(breeds.some(breed => breed.activities.length >= 3));
                       
-                      // BONUS
-                      const fetchWeights = breeds
-                      .filter(breed => breed.activities.includes('fetch'))
-                      .map(breed => breed.averageWeight);
-                      const heaviestFetchBreed = Math.max(...fetchWeights);
-                      
-                      console.log(fetchWeights);
-                      console.log(heaviestFetchBreed);
-                      */
+  // BONUS
+const fetchWeights = breeds
+.filter(breed => breed.activities.includes('fetch'))
+.map(breed => breed.averageWeight);
+const heaviestFetchBreed = Math.max(...fetchWeights);
+console.log(fetchWeights);
+console.log(heaviestFetchBreed);
+  */
 
 /*
-                     // Strings
-                     const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
-                     console.log(owners.sort());
-                     console.log(owners);
+ // Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+ console.log(owners);
                      
-                     // Numbers
-                     console.log(movements);
+// Numbers
+ console.log(movements);
                      
-                     // return < 0, A, B (keep order)
-                     // return > 0, B, A (switch)
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch)
                      
-                     // ascending
-                     // movements.sort((a, b) => {
-                      //   if (a > b) return 1;
-                      //   if (a < b) return -1;
-                      // });
+// ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
                       
-                      movements.sort((a, b) => a - b);
-                      console.log(movements);
+movements.sort((a, b) => a - b);
+console.log(movements);
                       
-                      // descending
-                      // movements.sort((a, b) => {
-                        //   if (a > b) return -1;
-                        //   if (a < b) return 1;
-                        // });
-                        movements.sort((a, b) => b - a);
-                        console.log(movements);
-                        */
+// descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+ //   if (a < b) return 1;
+  // });
+movements.sort((a, b) => b - a);
+console.log(movements);
+ */
 
 ////////////////////////////////////
 // Array Grouping
 
 /*
-                       console.log(movements);
+console.log(movements);
                        
-                       const groupedMovements = Object.groupBy(movements, movement =>
-                        movement > 0 ? 'deposits' : 'withdrawals'
-                        );
-                        console.log(groupedMovements);
-                        const groupedByActivity = Object.groupBy(accounts, account => {
-                          const movementCount = account.movements.length;
+ const groupedMovements = Object.groupBy(movements, movement =>
+movement > 0 ? 'deposits' : 'withdrawals'
+);
+console.log(groupedMovements);
+const groupedByActivity = Object.groupBy(accounts, account => {
+const movementCount = account.movements.length;
                           
-                          if (movementCount >= 8) return 'very active';
-                          if (movementCount >= 4) return 'active';
-                          if (movementCount >= 1) return 'moderate';
-                          return 'inactive';
-                          });
-   console.log(groupedByActivity);
+if (movementCount >= 8) return 'very active';
+if (movementCount >= 4) return 'active';
+if (movementCount >= 1) return 'moderate';
+return 'inactive';
+});
+console.log(groupedByActivity);
                           
  // const groupedAccounts = Object.groupBy(accounts, ({ type }) => type);
-                          // console.log(groupedAccounts);
-                          */
+// console.log(groupedAccounts);
+*/
 
 ///////////////////////////////////////
 // More Ways of Creating and Filling Arrays
 /*
-                         const arr = [1, 2, 3, 4, 5, 6, 7];
-                         console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
                          
-                         // Empty arrays + fill method
-                         const x = new Array(7);
-                         console.log(x);
-                         // console.log(x.map(() => 5));
-                         x.fill(1, 3, 5);
-                         x.fill(1);
-                         console.log(x);
+// Empty arrays + fill method
+const x = new Array(7);
+console.log(x);
+  // console.log(x.map(() => 5));
+x.fill(1, 3, 5);
+x.fill(1);
+console.log(x);
                          
-                         arr.fill(23, 2, 6);
-                         console.log(arr);
+arr.fill(23, 2, 6);
+console.log(arr);
                          
-                         // Array.from
-                         const y = Array.from({ length: 7 }, () => 1);
-                         console.log(y);
+// Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
                          
-                         const z = Array.from({ length: 7 }, (_, i) => i + 1);
-                         console.log(z);
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
                          
-                         labelBalance.addEventListener('click', function () {
-                          const movementsUI = Array.from(
-                            document.querySelectorAll('.movements__value'),
-                            el => Number(el.textContent.replace('€', ''))
-                            );
+labelBalance.addEventListener('click', function () {
+const movementsUI = Array.from(
+document.querySelectorAll('.movements__value'),
+el => Number(el.textContent.replace('€', ''))
+);
                             
-                            console.log(movementsUI);
+console.log(movementsUI);
                             
-                            const movementsUI2 = [...document.querySelectorAll('.movements__value')];
-                            });
-                            */
+const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+);
+*/
 
 ///////////////////////////////////////
 // Non-Destructive Alternatives: toReversed, toSorted, toSpliced, with
 /*
-                           console.log(movements);
-                           const reverseMov = movements.slice().reverse();
-                           console.log(reverseMov);
+ console.log(movements);
+ const reverseMov = movements.slice().reverse();
+   console.log(reverseMov);
                            console.log(movements);
                            
                            // toSorted (sort), toSPliced (splice)
@@ -821,28 +819,7 @@ const breeds = [
 ///////////////////////////////////////
 // Coding Challenge #5
 
-/* 
-                          Julia and Kate are still studying dogs. This time they are want to figure out if the dogs in their are eating too much or too little food.
-                          
-                          - Formula for calculating recommended food portion: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
-                          - Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
-                          - Eating an okay amount means the dog's current food portion is within a range 10% above and below the recommended portion (see hint).
-                          
-                          YOUR TASKS:
-                          1. Loop over the array containing dog objects, and for each dog, calculate the recommended food portion (recFood) and add it to the object as a new property. Do NOT create a new array, simply loop over the array (We never did this before, so think about how you can do this without creating a new array).
-                          2. Find Sarah's dog and log to the console whether it's eating too much or too little. HINT: Some dogs have multiple users, so you first need to find Sarah in the owners array, and so this one is a bit tricky (on purpose) 🤓
-                          3. Create an array containing all owners of dogs who eat too much (ownersTooMuch) and an array with all owners of dogs who eat too little (ownersTooLittle).
-                          4. Log a string to the console for each array created in 3., like this: "Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
-                          5. Log to the console whether there is ANY dog eating EXACTLY the amount of food that is recommended (just true or false)
-                          6. Log to the console whether ALL of the dogs are eating an OKAY amount of food (just true or false)
-                          7. Create an array containing the dogs that are eating an OKAY amount of food (try to reuse the condition used in 6.)
-                          8. Group the dogs into the following 3 groups: 'exact', 'too-much' and 'too-little', based on whether they are eating too much, too little or the exact amount of food, based on the recommended food portion.
-                          9. Group the dogs by the number of owners they have
-                          10. Sort the dogs array by recommended food portion in an ascending order. Make sure to NOT mutate the original array!
-                          
-                          HINT 1: Use many different tools to solve these challenges, you can use the summary lecture to choose between them 😉
-                          HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
-                          
+/*                          
  TEST DATA:
 const dogs = [
 { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
@@ -923,17 +900,3 @@ console.log(dogsGroupedByOwners);
 const dogsSorted = dogs.toSorted((a, b) => a.recFood - b.recFood);
 console.log(dogsSorted);
 */
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-console.log(23 == 23.0);
-
-// base 10 - 0 to 9 1/10 = 0.1. 3/10 = 3.3333333
-// binary base 2 - 0 1
-console.log(0.1 + 0.2);
-console.log(0.1 + 0.2 === 0.3);
-
-console.log(Number('23'));
-console.log(+'23');
